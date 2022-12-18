@@ -1,23 +1,22 @@
-import React from "react";
-import "./App.css";
-import { parse } from "path";
-import Home from "./components/Home";
-import Login from "./components/Login";
-import Register from "./components/Register";
-import { Routes, Route } from "react-router-dom";
-import Navbar from "./components/Navbar";
+import React from 'react'
+import './App.css'
+import Home from './components/Home'
+import Login from './components/Login'
+import Register from './components/Register'
+import { Routes, Route } from 'react-router-dom'
+import Navbar from './components/Navbar'
 
-function App() {
+function App (): JSX.Element {
   return (
     <div className="App">
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />}/>
         <Route path="/login" element={<Login />}/>
-        <Route path="/register" element={<Register />}/>      
+        <Route path="/register" element={<Register />}/>
       </Routes>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

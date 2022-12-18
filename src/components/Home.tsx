@@ -1,8 +1,8 @@
 import React from 'react'
 
-function Home() {
+function Home (): JSX.Element {
   return (
-    <div>Home</div>
+    <div>Homeee</div>
   )
 }
 

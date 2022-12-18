@@ -1,7 +1,7 @@
 import React from 'react'
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom'
 
-function Navbar() {
+function Navbar (): JSX.Element {
   return (
     <nav className="navbar">
         <Link to="/">LOGO</Link>
