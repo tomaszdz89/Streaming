@@ -1,8 +1,21 @@
 import React from 'react'
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+import TextField from '@mui/material/TextField'
 
-function Login (): JSX.Element {
+const Login = (): JSX.Element => {
   return (
-    <div>Login</div>
+    <Box component="form">
+      <div style={{ marginBottom: '10px' }}>
+        <TextField label="Login"></TextField>
+      </div>
+      <div style={{ marginBottom: '20px' }}>
+        <TextField label="Password" type="password"></TextField>
+      </div>
+      <div>
+        <Button variant="contained">Submit</Button>
+      </div>
+    </Box>
   )
 }
 
