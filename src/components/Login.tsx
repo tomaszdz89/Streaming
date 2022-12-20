@@ -18,13 +18,15 @@ const Login = (): JSX.Element => {
   const handleClickShowPassword = (): void => setShowPassword((show) => !show)
 
   return (
-    <div style={{
-      display: 'flex',
-      flexDirection: 'column',
-      gap: '30px',
-      maxWidth: '600px',
-      margin: '0 auto'
-    }}>
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '30px',
+        maxWidth: '600px',
+        margin: '0 auto'
+      }}
+    >
       <Paper
         elevation={3}
         style={{
@@ -87,7 +89,12 @@ const Login = (): JSX.Element => {
           </Box>
         </Box>
       </Paper>
-      <Typography variant="body2" sx={{ textAlign: { xs: 'center', sm: 'left' } }}><Link to={'/register'}>Forgot your password?</Link></Typography>
+      <Typography
+        variant="body2"
+        sx={{ textAlign: { xs: 'center', sm: 'left' } }}
+      >
+        <Link to={'/register'}>Forgot your password?</Link>
+      </Typography>
     </div>
   )
 }
