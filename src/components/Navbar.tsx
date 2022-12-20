@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 const Navbar = (): JSX.Element => {
   return (
-    <nav className="navbar">
+    <nav className="navbar" style={{ marginBottom: '40px' }}>
         <Link to="/">LOGO</Link>
         <ul>
             <Link to="/login">Login</Link>

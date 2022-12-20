@@ -4,6 +4,11 @@
 
 * {
   margin: 0;
-  padding: 0
+  padding: 0;
+  box-sizing: border-box;
 }
 
+a {
+  color: #007FFF;
+  text-decoration: none;
+}
