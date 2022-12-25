@@ -45,10 +45,7 @@ const Register = (): JSX.Element => {
           <Box component="form">
             <Grid container direction="column" gap="10px">
               <FormControl style={{ width: '100%' }}>
-                <TextField label="First Name"></TextField>
-              </FormControl>
-              <FormControl style={{ width: '100%' }}>
-                <TextField label="Last Name"></TextField>
+                <TextField label="Username"></TextField>
               </FormControl>
               <FormControl style={{ width: '100%' }}>
                 <TextField label="Email Address"></TextField>
