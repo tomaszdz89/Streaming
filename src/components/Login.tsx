@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Paper from '@mui/material/Paper'
 import Box from '@mui/material/Box'
-import FormControl from '@mui/material/FormControl'
+// import FormControl from '@mui/material/FormControl'
 import TextField from '@mui/material/TextField'
 import InputAdornment from '@mui/material/InputAdornment'
 import Visibility from '@mui/icons-material/Visibility'
@@ -52,12 +52,9 @@ const Login = (): JSX.Element => {
               Don&apos;t have an account? <Link to="/register">Sign up</Link>
             </Typography>
           </Box>
-          <Box component="form">
+          <form>
             <Grid container direction="column" gap="10px">
-              <FormControl style={{ width: '100%' }}>
                 <TextField label="Email Address"></TextField>
-              </FormControl>
-              <FormControl style={{ width: '100%' }}>
                 <TextField
                   label="Password"
                   type={showPassword ? 'text' : 'password'}
@@ -71,22 +68,20 @@ const Login = (): JSX.Element => {
                     )
                   }}
                 ></TextField>
-              </FormControl>
               <Button
                 variant="contained"
+                color="primary"
                 style={{
                   marginTop: '10px',
                   width: '100%',
                   height: '56px',
-                  background: '#e1e1e1',
-                  color: '#808080',
                   textTransform: 'capitalize'
                 }}
               >
                 Continue
               </Button>
             </Grid>
-          </Box>
+          </form>
         </Box>
       </Paper>
       <Typography
