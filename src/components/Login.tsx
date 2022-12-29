@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import Paper from '@mui/material/Paper'
 import Box from '@mui/material/Box'
-// import FormControl from '@mui/material/FormControl'
 import TextField from '@mui/material/TextField'
 import InputAdornment from '@mui/material/InputAdornment'
 import Visibility from '@mui/icons-material/Visibility'
@@ -14,7 +13,6 @@ import { Link } from 'react-router-dom'
 
 const Login = (): JSX.Element => {
   const [showPassword, setShowPassword] = useState(false)
-
   const handleClickShowPassword = (): void => setShowPassword((show) => !show)
 
   return (
@@ -77,6 +75,7 @@ const Login = (): JSX.Element => {
                   height: '56px',
                   textTransform: 'capitalize'
                 }}
+                type="submit"
               >
                 Continue
               </Button>
