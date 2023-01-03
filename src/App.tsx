@@ -4,12 +4,12 @@ import Home from './components/Home'
 import Login from './components/Login'
 import Register from './components/Register'
 import { Routes, Route } from 'react-router-dom'
-import Navbar from './components/Navbar'
+import Header from './components/Header'
 
 function App (): JSX.Element {
   return (
     <div className="App">
-      <Navbar />
+      <Header />
       <Routes>
         <Route path="/" element={<Home />}/>
         <Route path="/login" element={<Login />}/>

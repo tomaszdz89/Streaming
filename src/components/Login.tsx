@@ -87,7 +87,7 @@ const Login = (): JSX.Element => {
         variant="body2"
         sx={{ textAlign: { xs: 'center', sm: 'left' } }}
       >
-        <Link to={'/register'}>Forgot your password?</Link>
+        <Link to={'/register'} className="link--primary">Forgot your password?</Link>
       </Typography>
     </div>
   )

@@ -9,6 +9,11 @@
 }
 
 a {
+  color: #FFF;
+  text-decoration: none;
+}
+
+a.link--primary {
   color: #007FFF;
   text-decoration: none;
 }
