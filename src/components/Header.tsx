@@ -5,23 +5,32 @@ import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
 import IconButton from '@mui/material/IconButton'
 import AccountCircle from '@mui/icons-material/AccountCircle'
-import Switch from '@mui/material/Switch'
-import FormControlLabel from '@mui/material/FormControlLabel'
-import FormGroup from '@mui/material/FormGroup'
+// import Switch from '@mui/material/Switch'
+// import FormControlLabel from '@mui/material/FormControlLabel'
+// import FormGroup from '@mui/material/FormGroup'
 import { Container } from '@mui/material'
 import Nav from './Nav'
 import { Link } from 'react-router-dom'
+// import { RootState } from '../app/store'
+import { useSelector } from 'react-redux'
+import { RootState } from '../app/store'
 
 const Header = (): JSX.Element => {
-  const [auth, setAuth] = React.useState(true)
+  // const dispatch = useDispatch()
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    setAuth(event.target.checked)
-  }
+  // const authState = useSelector((state: RootState) => state.authReducer.value)
+
+  // const [auth, setAuth] = React.useState(true)
+
+  // const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+  //   setAuth(event.target.checked)
+  // }
+
+  const auth = useSelector((state: RootState) => state.authReducer.value)
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <FormGroup>
+      {/* <FormGroup>
         <FormControlLabel
           control={
             <Switch
@@ -32,7 +41,7 @@ const Header = (): JSX.Element => {
           }
           label={auth ? 'Logout' : 'Login'}
         />
-      </FormGroup>
+      </FormGroup> */}
       <AppBar position="static" elevation={0}>
         <Container>
           <Toolbar>
@@ -50,15 +59,17 @@ const Header = (): JSX.Element => {
             {auth
               ? (
               <div>
-                <IconButton
-                  size="large"
-                  aria-label="account of current user"
-                  aria-controls="menu-appbar"
-                  aria-haspopup="true"
-                  color="inherit"
-                >
-                  <AccountCircle />
-                </IconButton>
+                <Link to="/profile">
+                  <IconButton
+                    size="large"
+                    aria-label="account of current user"
+                    aria-controls="menu-appbar"
+                    aria-haspopup="true"
+                    color="inherit"
+                  >
+                    <AccountCircle />
+                  </IconButton>
+                </Link>
               </div>
                 )
               : (
