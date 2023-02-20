@@ -2,12 +2,15 @@ import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { RootState } from '../app/store'
 import { logoutt, refresh } from '../slices/auth'
+import { useNavigate } from 'react-router-dom'
 
 const Profile = (): JSX.Element => {
   const dispatch = useDispatch<any>()
+  const navigate = useNavigate()
 
-  const test = (): void => {
+  const logout = (): void => {
     dispatch(logoutt({}))
+    navigate('/')
   }
 
   const testtest = (): void => {
@@ -21,7 +24,7 @@ const Profile = (): JSX.Element => {
     <>
         <p>elo</p>
         {name}
-        <button onClick={test}>test</button>
+        <button onClick={logout}>logout</button>
         <button onClick={testtest}>refresh</button>
     </>
   )
