@@ -5,6 +5,7 @@ import Login from './components/Login'
 import Register from './components/Register'
 import { Routes, Route } from 'react-router-dom'
 import Navbar from './components/Navbar'
+import Profile from './components/Profile'
 
 function App (): JSX.Element {
   return (
@@ -14,6 +15,7 @@ function App (): JSX.Element {
         <Route path="/" element={<Home />}/>
         <Route path="/login" element={<Login />}/>
         <Route path="/register" element={<Register />}/>
+        <Route path="/profile" element={<Profile/>}/>
       </Routes>
     </div>
   )

@@ -2,10 +2,21 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import type { PayloadAction } from '@reduxjs/toolkit'
 
-import AuthService from '../services/auth.service'
+import authService from '../services/auth.service'
 
 interface UserData {
   name: string
+  email: string
+  accessToken: string
+}
+
+interface RegisterData {
+  name: string
+  email: string
+  password: string
+}
+
+interface LoginData {
   email: string
   password: string
 }
@@ -16,16 +27,18 @@ interface Error {
 }
 
 interface InitialState {
-  user: null
+  user: UserData | null
   isError: boolean
   message: null | string
 }
 
+const user = JSON.parse(localStorage.getItem('user') ?? '{}')
+
 export const register = createAsyncThunk(
   'auth/register',
-  async (values: UserData, thunkAPI) => {
+  async (values: RegisterData, thunkAPI) => {
     try {
-      const response = await AuthService.register(values)
+      const response = await authService.register(values)
       return response.data
     } catch (err) {
       const error = err as AxiosError<Error>
@@ -34,8 +47,38 @@ export const register = createAsyncThunk(
   }
 )
 
+export const login = createAsyncThunk(
+  'auth/login',
+  async (values: LoginData, thunkAPI) => {
+    try {
+      const response = await authService.login(values)
+      localStorage.setItem('user', JSON.stringify(response.data))
+      return response.data
+    } catch (err) {
+      const error = err as AxiosError<Error>
+      return thunkAPI.rejectWithValue(error.response?.data.message)
+    }
+  }
+)
+
+export const logoutt = createAsyncThunk<{}, {}, { state: { auth: InitialState } }>(
+  'auth/logout',
+  async (_, thunkAPI) => {
+    const { auth } = thunkAPI.getState()
+    if (auth.user !== null) { await authService.logoutt(auth.user.accessToken) }
+  }
+)
+
+export const refresh = createAsyncThunk<{}, {}, { state: { auth: InitialState } }>(
+  'auth/refresh',
+  async (_, thunkAPI) => {
+    const response = await authService.refresh()
+    return response.data
+  }
+)
+
 const initialState: InitialState = {
-  user: null,
+  user,
   isError: false,
   message: null
 }
@@ -52,6 +95,22 @@ const authSlice = createSlice({
     builder.addCase(register.rejected, (state, action: PayloadAction<any>) => {
       state.isError = true
       state.message = action.payload
+    })
+    builder.addCase(login.fulfilled, (state, action: PayloadAction<any>) => {
+      state.isError = false
+      state.user = action.payload
+    })
+    builder.addCase(login.rejected, (state, action: PayloadAction<any>) => {
+      state.isError = true
+      state.message = action.payload
+    })
+    builder.addCase(logoutt.fulfilled, (state, action: PayloadAction<any>) => {
+      state.user = null
+    })
+    builder.addCase(refresh.fulfilled, (state, action: PayloadAction<any>) => {
+      if (state.user !== null) {
+        state.user.accessToken = action.payload
+      }
     })
   }
 })

@@ -10,10 +10,37 @@ import IconButton from '@mui/material/IconButton'
 import Button from '@mui/material/Button'
 import Grid from '@mui/material/Grid'
 import { Link } from 'react-router-dom'
+import { login } from '../slices/auth'
+import { useDispatch } from 'react-redux'
 
 const Login = (): JSX.Element => {
   const [showPassword, setShowPassword] = useState(false)
   const handleClickShowPassword = (): void => setShowPassword((show) => !show)
+  const dispatch = useDispatch<any>()
+
+  const [formData, setFormData] = useState({
+    email: '',
+    password: ''
+  })
+
+  const { email, password } = formData
+
+  const onChange = (e: any): void => {
+    setFormData((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value
+    }))
+  }
+
+  const onSubmit = (e: any): void => {
+    e.preventDefault()
+
+    const userData = {
+      email,
+      password
+    }
+    dispatch(login(userData))
+  }
 
   return (
     <div
@@ -50,12 +77,23 @@ const Login = (): JSX.Element => {
               Don&apos;t have an account? <Link to="/register">Sign up</Link>
             </Typography>
           </Box>
-          <form>
+          <form onSubmit={onSubmit}>
             <Grid container direction="column" gap="10px">
-                <TextField label="Email Address"></TextField>
+                <TextField
+                  type="email"
+                  label="Email Address"
+                  id='email'
+                  name='email'
+                  value={email}
+                  onChange={onChange}>
+                </TextField>
                 <TextField
                   label="Password"
                   type={showPassword ? 'text' : 'password'}
+                  id='password'
+                  name='password'
+                  value={password}
+                  onChange={onChange}
                   InputProps={{
                     endAdornment: (
                       <InputAdornment position="end">
