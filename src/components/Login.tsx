@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Paper from '@mui/material/Paper'
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
@@ -10,13 +10,17 @@ import IconButton from '@mui/material/IconButton'
 import Button from '@mui/material/Button'
 import Grid from '@mui/material/Grid'
 import { Link } from 'react-router-dom'
-import { login } from '../slices/auth'
+import { login, reset } from '../slices/auth'
 import { useDispatch } from 'react-redux'
 
 const Login = (): JSX.Element => {
   const [showPassword, setShowPassword] = useState(false)
   const handleClickShowPassword = (): void => setShowPassword((show) => !show)
   const dispatch = useDispatch<any>()
+
+  useEffect(() => {
+    dispatch(reset())
+  }, [dispatch])
 
   const [formData, setFormData] = useState({
     email: '',

@@ -64,8 +64,13 @@ export const login = createAsyncThunk(
 export const logoutt = createAsyncThunk<{}, {}, { state: { auth: InitialState } }>(
   'auth/logout',
   async (_, thunkAPI) => {
-    const { auth } = thunkAPI.getState()
-    if (auth.user !== null) { await authService.logoutt(auth.user.accessToken) }
+    try {
+      const { auth } = thunkAPI.getState()
+      if (auth.user !== null) { await authService.logoutt(auth.user.accessToken) }
+    } catch (err) {
+      const error = err as AxiosError<Error>
+      return thunkAPI.rejectWithValue(error.response?.data.message)
+    }
   }
 )
 
@@ -86,7 +91,12 @@ const initialState: InitialState = {
 const authSlice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {},
+  reducers: {
+    reset: (state) => {
+      state.isError = false
+      state.message = null
+    }
+  },
   extraReducers: (builder) => {
     builder.addCase(register.fulfilled, (state, action) => {
       state.isError = false
@@ -112,8 +122,12 @@ const authSlice = createSlice({
         state.user.accessToken = action.payload
       }
     })
+    builder.addCase(refresh.rejected, (state, action: PayloadAction<any>) => {
+      state.user = null
+    })
   }
 })
 
 const { reducer } = authSlice
+export const { reset } = authSlice.actions
 export default reducer

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Paper from '@mui/material/Paper'
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
@@ -14,7 +14,7 @@ import { useFormik } from 'formik'
 import * as yup from 'yup'
 import { RootState } from '../app/store'
 import { useDispatch, useSelector } from 'react-redux'
-import { register } from '../slices/auth'
+import { register, reset } from '../slices/auth'
 import RegisterAlert from './RegisterAlert'
 
 const Register = (): JSX.Element => {
@@ -22,6 +22,10 @@ const Register = (): JSX.Element => {
   const handleClickShowPassword = (): void => setShowPassword((show) => !show)
   const dispatch = useDispatch<any>()
   const { message } = useSelector((state: RootState) => state.auth)
+
+  useEffect(() => {
+    dispatch(reset())
+  }, [dispatch])
 
   const validationSchema = yup.object({
     name: yup
