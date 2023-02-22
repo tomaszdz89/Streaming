@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import type { PayloadAction } from '@reduxjs/toolkit'
+import { history } from '../helpers/history'
 
 import authService from '../services/auth.service'
 
@@ -53,6 +54,7 @@ export const login = createAsyncThunk(
     try {
       const response = await authService.login(values)
       localStorage.setItem('user', JSON.stringify(response.data))
+      history.navigate('/profile')
       return response.data
     } catch (err) {
       const error = err as AxiosError<Error>
@@ -67,6 +69,7 @@ export const logout = createAsyncThunk<{}, {}, { state: { auth: InitialState } }
     try {
       const { auth } = thunkAPI.getState()
       if (auth.user !== null) { await authService.logout(auth.user.accessToken) }
+      history.navigate('/')
     } catch (err) {
       const error = err as AxiosError<Error>
       return thunkAPI.rejectWithValue(error.response?.data.message)
