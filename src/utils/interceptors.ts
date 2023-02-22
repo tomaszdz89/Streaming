@@ -10,7 +10,7 @@ const setup = (store: any): void => {
     async (error) => {
       if (error.response.status === 401) {
         const data = await store.dispatch(refresh({}))
-        if (data.error.message === 'Request failed with status code 401') {
+        if (data.meta.requestStatus === 'rejected') {
           history.navigate('/login')
           return await Promise.reject(error)
         }
