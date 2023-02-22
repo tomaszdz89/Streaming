@@ -32,9 +32,10 @@
         ],        
         "react-hooks/rules-of-hooks": "error",
         "react-hooks/exhaustive-deps": "warn",
-        "import/prefer-default-export": "off"
+        "import/prefer-default-export": "off",
         // "typescript-eslint/explicit-function-return-type": "off"
-    },
+        "@typescript-eslint/restrict-template-expressions": "off"        
+        },
     "settings": {
         "import/resolver": {
         "typescript": {}

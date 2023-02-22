@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Paper from '@mui/material/Paper'
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
@@ -12,16 +12,26 @@ import Grid from '@mui/material/Grid'
 import { Link } from 'react-router-dom'
 import { useFormik } from 'formik'
 import * as yup from 'yup'
+import { RootState } from '../app/store'
+import { useDispatch, useSelector } from 'react-redux'
+import { register, reset } from '../slices/auth'
+import AuthAlert from './AuthAlert'
 
 const Register = (): JSX.Element => {
   const [showPassword, setShowPassword] = useState(false)
   const handleClickShowPassword = (): void => setShowPassword((show) => !show)
+  const dispatch = useDispatch<any>()
+  const { message } = useSelector((state: RootState) => state.auth)
+
+  useEffect(() => {
+    dispatch(reset())
+  }, [dispatch])
 
   const validationSchema = yup.object({
-    username: yup
-      .string().min(4, 'Username must be at least 4 characters')
-      .max(12, 'Username must be less than 12 characters')
-      .required('Username is required'),
+    name: yup
+      .string().min(4, 'Name must be at least 4 characters')
+      .max(12, 'Name must be less than 12 characters')
+      .required('Name is required'),
     email: yup
       .string().email('Enter a valid email')
       .required('Email is required'),
@@ -33,25 +43,28 @@ const Register = (): JSX.Element => {
 
   const formik = useFormik({
     initialValues: {
-      username: '',
+      name: '',
       email: '',
       password: ''
     },
     validationSchema,
     onSubmit: (values) => {
-      console.log(values)
+      dispatch(register(values))
     }
   })
 
   return (
+    <>
     <Paper
       elevation={3}
       style={{
         maxWidth: '600px',
-        padding: 50,
+        padding: '50px',
         textAlign: 'left',
         display: 'flex',
-        justifyContent: 'center',
+        flexDirection: 'column',
+        alignItems: 'center',
+        gap: '30px',
         margin: 'auto'
       }}
     >
@@ -72,15 +85,15 @@ const Register = (): JSX.Element => {
         <form onSubmit={formik.handleSubmit}>
           <Grid container direction="column" gap="10px">
             <TextField
-              label="Username"
-              name="username"
-              id="username"
+              label="Name"
+              name="name"
+              id="name"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              value={formik.values.username}
-              error={Boolean(formik.touched.username) && Boolean(formik.errors.username)}
+              value={formik.values.name}
+              error={Boolean(formik.touched.name) && Boolean(formik.errors.name)}
             ></TextField>
-            {(Boolean(formik.touched.username) && Boolean(formik.errors.username)) ? <Typography color="error" variant="body2">{formik.errors.username}</Typography> : null}
+            {(Boolean(formik.touched.name) && Boolean(formik.errors.name)) ? <Typography color="error" variant="body2">{formik.errors.name}</Typography> : null}
             <TextField
               label="Email Address"
               name="email"
@@ -128,7 +141,9 @@ const Register = (): JSX.Element => {
           </Grid>
         </form>
       </Box>
+      {Boolean(message) && <AuthAlert/>}
     </Paper>
+    </>
   )
 }
 

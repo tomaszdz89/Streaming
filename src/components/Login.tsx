@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Paper from '@mui/material/Paper'
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
@@ -10,10 +10,44 @@ import IconButton from '@mui/material/IconButton'
 import Button from '@mui/material/Button'
 import Grid from '@mui/material/Grid'
 import { Link } from 'react-router-dom'
+import { login, reset } from '../slices/auth'
+import { useDispatch, useSelector } from 'react-redux'
+import AuthAlert from './AuthAlert'
+import { RootState } from '../app/store'
 
 const Login = (): JSX.Element => {
   const [showPassword, setShowPassword] = useState(false)
   const handleClickShowPassword = (): void => setShowPassword((show) => !show)
+  const dispatch = useDispatch<any>()
+  const { message } = useSelector((state: RootState) => state.auth)
+
+  useEffect(() => {
+    dispatch(reset())
+  }, [dispatch])
+
+  const [formData, setFormData] = useState({
+    email: '',
+    password: ''
+  })
+
+  const { email, password } = formData
+
+  const onChange = (e: any): void => {
+    setFormData((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value
+    }))
+  }
+
+  const onSubmit = (e: any): void => {
+    e.preventDefault()
+
+    const userData = {
+      email,
+      password
+    }
+    dispatch(login(userData))
+  }
 
   return (
     <div
@@ -28,11 +62,14 @@ const Login = (): JSX.Element => {
       <Paper
         elevation={3}
         style={{
+          maxWidth: '600px',
           width: '100%',
-          padding: 50,
+          padding: '50px',
           textAlign: 'left',
           display: 'flex',
-          justifyContent: 'center',
+          flexDirection: 'column',
+          alignItems: 'center',
+          gap: '30px',
           margin: 'auto'
         }}
       >
@@ -50,12 +87,23 @@ const Login = (): JSX.Element => {
               Don&apos;t have an account? <Link to="/register">Sign up</Link>
             </Typography>
           </Box>
-          <form>
+          <form onSubmit={onSubmit}>
             <Grid container direction="column" gap="10px">
-                <TextField label="Email Address"></TextField>
+                <TextField
+                  type="email"
+                  label="Email Address"
+                  id='email'
+                  name='email'
+                  value={email}
+                  onChange={onChange}>
+                </TextField>
                 <TextField
                   label="Password"
                   type={showPassword ? 'text' : 'password'}
+                  id='password'
+                  name='password'
+                  value={password}
+                  onChange={onChange}
                   InputProps={{
                     endAdornment: (
                       <InputAdornment position="end">
@@ -82,12 +130,13 @@ const Login = (): JSX.Element => {
             </Grid>
           </form>
         </Box>
+        {Boolean(message) && <AuthAlert/>}
       </Paper>
       <Typography
         variant="body2"
         sx={{ textAlign: { xs: 'center', sm: 'left' } }}
       >
-        <Link to={'/register'}>Forgot your password?</Link>
+        <Link to={'/register'} className="link--primary">Forgot your password?</Link>
       </Typography>
     </div>
   )
