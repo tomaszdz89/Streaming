@@ -2,13 +2,13 @@ import { Button, Typography } from '@mui/material'
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { RootState } from '../app/store'
-import { logoutt } from '../slices/auth'
+import { logout } from '../slices/auth'
 
 const Profile = (): JSX.Element => {
   const dispatch = useDispatch<any>()
 
-  const logout = (): void => {
-    dispatch(logoutt({}))
+  const onLogout = (): void => {
+    dispatch(logout({}))
   }
 
   const { user } = useSelector((state: RootState) => state.auth)
@@ -26,7 +26,7 @@ const Profile = (): JSX.Element => {
           height: '56px',
           textTransform: 'capitalize'
         }}
-        onClick={logout}
+        onClick={onLogout}
       >
         Logout
       </Button>

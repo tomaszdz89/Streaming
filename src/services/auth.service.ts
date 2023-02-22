@@ -22,7 +22,7 @@ const login = async (values: LoginData): Promise<AxiosResponse<any, any>> => {
   return await axiosBasic.post(API_URL + 'auth/login', values, { withCredentials: true })
 }
 
-const logoutt = async (accessToken: string): Promise<AxiosResponse<any, any>> => {
+const logout = async (accessToken: string): Promise<AxiosResponse<any, any>> => {
   localStorage.removeItem('user')
   return await axiosAuth.get(API_URL + 'auth/logout', { withCredentials: true, headers: { Authorization: `Bearer ${accessToken}` } })
 }
@@ -32,7 +32,7 @@ const refresh = async (): Promise<AxiosResponse<any, any>> => {
 }
 
 const authService = {
-  register, login, logoutt, refresh
+  register, login, logout, refresh
 }
 
 export default authService
