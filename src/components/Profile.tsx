@@ -1,20 +1,14 @@
+import { Button, Typography } from '@mui/material'
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { RootState } from '../app/store'
-import { logoutt, refresh } from '../slices/auth'
-// import { useNavigate } from 'react-router-dom'
+import { logoutt } from '../slices/auth'
 
 const Profile = (): JSX.Element => {
   const dispatch = useDispatch<any>()
-  // const navigate = useNavigate()
 
   const logout = (): void => {
     dispatch(logoutt({}))
-    // navigate('/')
-  }
-
-  const testtest = (): void => {
-    dispatch(refresh({}))
   }
 
   const { user } = useSelector((state: RootState) => state.auth)
@@ -22,10 +16,20 @@ const Profile = (): JSX.Element => {
 
   return (
     <>
-        <p>elo</p>
-        {name}
-        <button onClick={logout}>logout</button>
-        <button onClick={testtest}>refresh</button>
+      {Boolean(name) && <Typography>Hi, {name}</Typography>}
+      <Button
+        variant="contained"
+        color="primary"
+        style={{
+          marginTop: '10px',
+          width: '258px',
+          height: '56px',
+          textTransform: 'capitalize'
+        }}
+        onClick={logout}
+      >
+        Logout
+      </Button>
     </>
   )
 }
