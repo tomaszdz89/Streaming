@@ -11,12 +11,15 @@ import Button from '@mui/material/Button'
 import Grid from '@mui/material/Grid'
 import { Link } from 'react-router-dom'
 import { login, reset } from '../slices/auth'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import AuthAlert from './AuthAlert'
+import { RootState } from '../app/store'
 
 const Login = (): JSX.Element => {
   const [showPassword, setShowPassword] = useState(false)
   const handleClickShowPassword = (): void => setShowPassword((show) => !show)
   const dispatch = useDispatch<any>()
+  const { message } = useSelector((state: RootState) => state.auth)
 
   useEffect(() => {
     dispatch(reset())
@@ -59,11 +62,14 @@ const Login = (): JSX.Element => {
       <Paper
         elevation={3}
         style={{
+          maxWidth: '600px',
           width: '100%',
-          padding: 50,
+          padding: '50px',
           textAlign: 'left',
           display: 'flex',
-          justifyContent: 'center',
+          flexDirection: 'column',
+          alignItems: 'center',
+          gap: '30px',
           margin: 'auto'
         }}
       >
@@ -124,12 +130,13 @@ const Login = (): JSX.Element => {
             </Grid>
           </form>
         </Box>
+        {Boolean(message) && <AuthAlert/>}
       </Paper>
       <Typography
         variant="body2"
         sx={{ textAlign: { xs: 'center', sm: 'left' } }}
       >
-        <Link to={'/register'}>Forgot your password?</Link>
+        <Link to={'/register'} className="link--primary">Forgot your password?</Link>
       </Typography>
     </div>
   )

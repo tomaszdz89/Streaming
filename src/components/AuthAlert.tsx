@@ -3,7 +3,7 @@ import Alert from '@mui/material/Alert'
 import { useSelector } from 'react-redux'
 import { RootState } from '../app/store'
 
-const RegisterAlert = (): JSX.Element => {
+const AuthAlert = (): JSX.Element => {
   const { message, isError } = useSelector((state: RootState) => state.auth)
 
   return (
@@ -11,4 +11,4 @@ const RegisterAlert = (): JSX.Element => {
   )
 }
 
-export default RegisterAlert
+export default AuthAlert

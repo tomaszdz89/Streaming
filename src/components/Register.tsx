@@ -15,7 +15,7 @@ import * as yup from 'yup'
 import { RootState } from '../app/store'
 import { useDispatch, useSelector } from 'react-redux'
 import { register, reset } from '../slices/auth'
-import RegisterAlert from './RegisterAlert'
+import AuthAlert from './AuthAlert'
 
 const Register = (): JSX.Element => {
   const [showPassword, setShowPassword] = useState(false)
@@ -141,7 +141,7 @@ const Register = (): JSX.Element => {
           </Grid>
         </form>
       </Box>
-      {Boolean(message) && <RegisterAlert/>}
+      {Boolean(message) && <AuthAlert/>}
     </Paper>
     </>
   )
